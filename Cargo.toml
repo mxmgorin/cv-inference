@@ -2,7 +2,7 @@
 name = "cv-inference"
 version = "0.1.0"
 edition = "2024"
-description = "REST API in Rust that runs YOLO ONNX inference and returns detected objects as JSON"
+description = "Object detection in Rust (YOLO11 + ONNX Runtime): a REST API and an image-annotation CLI on a reusable detection library"
 
 [dependencies]
 axum = { version = "0.8", features = ["multipart"] }

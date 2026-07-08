@@ -1,16 +1,19 @@
-# CV Inference Service (Rust + YOLO + ONNX)
+# CV Inference (Rust + YOLO + ONNX)
 
-A small, production-style REST API in Rust that accepts an image, runs inference
-with a pre-trained **YOLO11** ONNX model via **ONNX Runtime**, and returns the
-detected objects as JSON.
+Object detection in Rust built around a pre-trained **YOLO11** ONNX model run
+via **ONNX Runtime**. It's organised as a small reusable detection library with
+two front-ends on top:
 
-The project demonstrates *backend integration* of a computer-vision model —
-model loading, image preprocessing, ONNX inference, and detection
-post-processing — rather than ML model training.
+- 🌐 a **REST API** (Axum) that returns detections as JSON, and
+- 🖼️ an **`annotate` CLI** that draws the detected boxes onto an image.
+
+The focus is *backend integration* of a computer-vision model — model loading,
+image preprocessing, ONNX inference, and detection post-processing — rather than
+ML model training.
 
 ## Demo
 
-![Detection demo — a street scene with cars, a tram and pedestrians boxed and labelled](docs/assets/demo.jpg)
+<img src="docs/assets/demo.jpg" alt="Detection demo — a street scene with a car, a tram and pedestrians boxed and labelled" width="560">
 
 Boxes and labels above were drawn by the bundled `annotate` tool from the
 service's own detections. Regenerate it (or annotate any image) with:
@@ -22,17 +25,6 @@ cargo run --release --features draw --bin annotate -- path/to/image.jpg out.jpg
 ```
 
 <sub>Sample photo: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Crossing_marked_with_a_traffic_sign_20190517_184744_HDR.jpg) (CC0).</sub>
-
-## Tech stack
-
-- **Rust** (edition 2024)
-- **Axum** + **Tokio** — async HTTP server
-- **ort** — ONNX Runtime bindings (statically linked at build time)
-- **image** — decoding & resizing
-- **ndarray** — tensor manipulation
-- **serde** / **serde_yaml** — JSON responses & YAML config
-- **tracing** — structured logging
-- **Docker** — containerised deployment
 
 ## Quick start
 
