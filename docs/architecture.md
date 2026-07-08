@@ -25,19 +25,28 @@ never blocked.
 
 ```
 src/
-  main.rs              app wiring, router, graceful shutdown
+  lib.rs               library root: re-exports modules + AppState
+  main.rs              server binary: router, graceful shutdown
+  bin/annotate.rs      demo CLI: draws detections on an image (feature `draw`)
   config.rs            YAML config loading
   error.rs             error type → JSON HTTP responses
   api/detect.rs        POST /detect handler
   inference/mod.rs     Detector trait
   inference/yolo.rs    YOLO ONNX implementation (pre/post-processing, NMS)
   model/detection.rs   Detection / BoundingBox / DetectResponse data model
+assets/                bundled font for the annotate tool
 models/                ONNX model weights (not committed)
 docker/Dockerfile      multi-stage container build
 scripts/get_model.sh   downloads yolo11n.onnx
+scripts/demo.sh        regenerates the README demo image
 config.yaml            server / model / inference settings
 docs/                  documentation
 ```
+
+The crate is split into a **library** (`src/lib.rs`, holding all the logic) and
+two binaries that consume it: the `cv-inference` server and the optional
+`annotate` demo tool (built only with `--features draw` so the server binary
+stays lean).
 
 ## Inference pipeline
 

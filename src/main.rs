@@ -1,30 +1,14 @@
-//! CV Inference Service — a REST API that runs YOLO ONNX inference on an image
-//! and returns detected objects as JSON.
-
-mod api;
-mod config;
-mod error;
-mod inference;
-mod model;
-
-use std::sync::Arc;
+//! CV Inference Service — HTTP server binary.
 
 use axum::{
     Router,
     routing::{get, post},
 };
+use std::sync::Arc;
 use tokio::net::TcpListener;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
-use crate::config::Config;
-use crate::error::AppError;
-use crate::inference::YoloDetector;
-
-/// Shared application state injected into handlers.
-#[derive(Clone)]
-pub struct AppState {
-    pub detector: Arc<YoloDetector>,
-}
+use cv_inference::{AppState, api, config::Config, error::AppError, inference::YoloDetector};
 
 #[tokio::main]
 async fn main() -> Result<(), AppError> {

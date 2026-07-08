@@ -20,6 +20,20 @@ tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
 thiserror = "2"
 anyhow = "1"
 
+# Only needed by the optional `annotate` CLI (feature `draw`), which draws
+# bounding boxes on an image. Kept out of the server binary by default.
+imageproc = { version = "0.27", optional = true }
+ab_glyph = { version = "0.2", optional = true }
+
+[features]
+draw = ["dep:imageproc", "dep:ab_glyph"]
+
+# The `annotate` demo tool is built only with `--features draw`.
+[[bin]]
+name = "annotate"
+path = "src/bin/annotate.rs"
+required-features = ["draw"]
+
 [profile.release]
 opt-level = 3
 lto = "thin"

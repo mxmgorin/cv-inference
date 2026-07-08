@@ -8,6 +8,21 @@ The project demonstrates *backend integration* of a computer-vision model —
 model loading, image preprocessing, ONNX inference, and detection
 post-processing — rather than ML model training.
 
+## Demo
+
+![Detection demo — a street scene with cars, a tram and pedestrians boxed and labelled](docs/assets/demo.jpg)
+
+Boxes and labels above were drawn by the bundled `annotate` tool from the
+service's own detections. Regenerate it (or annotate any image) with:
+
+```bash
+cargo run --release --features draw --bin annotate -- path/to/image.jpg out.jpg
+# or reproduce the demo above:
+./scripts/demo.sh
+```
+
+<sub>Sample photo: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Crossing_marked_with_a_traffic_sign_20190517_184744_HDR.jpg) (CC0).</sub>
+
 ## Tech stack
 
 - **Rust** (edition 2024)
