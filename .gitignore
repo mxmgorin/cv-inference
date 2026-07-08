@@ -1,0 +1,8 @@
+/target
+
+# Model weights are downloaded via scripts/get_model.sh, not committed.
+/models/*.onnx
+
+# Sample images used for local testing.
+/data/*.jpg
+/data/*.png

@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+model:
+  path: models/yolo11n.onnx
+
+inference:
+  confidence_threshold: 0.4
+  iou_threshold: 0.5

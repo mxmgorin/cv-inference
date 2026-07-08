@@ -1,0 +1,6 @@
+target/
+models/
+data/
+.git/
+*.md
+!README.md
