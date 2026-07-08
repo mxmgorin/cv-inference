@@ -57,12 +57,4 @@ curl -F "file=@cat.jpg" http://localhost:8080/detect
 - [API reference](docs/api.md) — endpoints, request/response formats, errors
 - [Configuration](docs/configuration.md) — model download, `config.yaml`, environment variables
 - [Deployment](docs/deployment.md) — local build & run, Docker
-
-## Future improvements
-
-- Swagger / OpenAPI schema
-- Multiple detector implementations
-- Batch inference
-- Prometheus metrics
-- Async job queue
-- RTSP / video processing
+- [Roadmap](docs/roadmap.md) — planned / future improvements
