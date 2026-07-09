@@ -1,3 +1,3 @@
 pub mod detection;
 
-pub use detection::{BoundingBox, Detection, DetectResponse};
+pub use detection::{BoundingBox, DetectResponse, Detection};

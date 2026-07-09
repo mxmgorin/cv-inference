@@ -65,5 +65,7 @@ async fn extract_multipart_file(request: Request) -> Result<Vec<u8>> {
         }
     }
 
-    Err(AppError::BadRequest("no `file` field found in multipart form".into()))
+    Err(AppError::BadRequest(
+        "no `file` field found in multipart form".into(),
+    ))
 }

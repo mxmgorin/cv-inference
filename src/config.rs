@@ -34,7 +34,10 @@ impl Config {
     pub fn load(path: impl AsRef<Path>) -> Result<Self, AppError> {
         let path = path.as_ref();
         let raw = std::fs::read_to_string(path).map_err(|e| {
-            AppError::Config(format!("failed to read config file {}: {e}", path.display()))
+            AppError::Config(format!(
+                "failed to read config file {}: {e}",
+                path.display()
+            ))
         })?;
         let config: Config = serde_yaml::from_str(&raw)
             .map_err(|e| AppError::Config(format!("failed to parse config: {e}")))?;

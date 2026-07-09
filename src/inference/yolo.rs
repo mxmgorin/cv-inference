@@ -94,7 +94,10 @@ impl YoloDetector {
                 .map_err(|_| AppError::Internal("inference session mutex poisoned".into()))?;
             let outputs = session.run(inputs!["images" => TensorRef::from_array_view(&input)?])?;
             // Output "output0" has shape [1, 84, 8400]; transpose to [8400, 84, 1].
-            outputs["output0"].try_extract_array::<f32>()?.t().into_owned()
+            outputs["output0"]
+                .try_extract_array::<f32>()?
+                .t()
+                .into_owned()
         };
         tracing::info!("inference={}ms", started.elapsed().as_millis());
 
@@ -199,9 +202,9 @@ fn non_maximum_suppression(mut candidates: Vec<Candidate>, iou_threshold: f32) -
 
     let mut kept: Vec<Candidate> = Vec::new();
     for candidate in candidates {
-        let overlaps = kept.iter().any(|k| {
-            k.class_id == candidate.class_id && k.iou(&candidate) > iou_threshold
-        });
+        let overlaps = kept
+            .iter()
+            .any(|k| k.class_id == candidate.class_id && k.iou(&candidate) > iou_threshold);
         if !overlaps {
             kept.push(candidate);
         }

@@ -20,14 +20,14 @@ use cv_inference::model::Detection;
 
 /// A small vivid palette; boxes are coloured by class id.
 const PALETTE: [Rgba<u8>; 8] = [
-    Rgba([239, 68, 68, 255]),   // red
-    Rgba([34, 197, 94, 255]),   // green
-    Rgba([59, 130, 246, 255]),  // blue
-    Rgba([234, 179, 8, 255]),   // yellow
-    Rgba([168, 85, 247, 255]),  // purple
-    Rgba([236, 72, 153, 255]),  // pink
-    Rgba([249, 115, 22, 255]),  // orange
-    Rgba([20, 184, 166, 255]),  // teal
+    Rgba([239, 68, 68, 255]),  // red
+    Rgba([34, 197, 94, 255]),  // green
+    Rgba([59, 130, 246, 255]), // blue
+    Rgba([234, 179, 8, 255]),  // yellow
+    Rgba([168, 85, 247, 255]), // purple
+    Rgba([236, 72, 153, 255]), // pink
+    Rgba([249, 115, 22, 255]), // orange
+    Rgba([20, 184, 166, 255]), // teal
 ];
 
 const WHITE: Rgba<u8> = Rgba([255, 255, 255, 255]);
@@ -39,7 +39,10 @@ async fn main() -> anyhow::Result<()> {
         .next()
         .map(PathBuf::from)
         .ok_or_else(|| anyhow::anyhow!("usage: annotate <input-image> [output-image]"))?;
-    let output = args.next().map(PathBuf::from).unwrap_or_else(|| default_output(&input));
+    let output = args
+        .next()
+        .map(PathBuf::from)
+        .unwrap_or_else(|| default_output(&input));
 
     // Load the model via the same config the server uses.
     let config_path = std::env::var("CONFIG_PATH").unwrap_or_else(|_| "config.yaml".to_string());
@@ -52,7 +55,11 @@ async fn main() -> anyhow::Result<()> {
 
     let bytes = std::fs::read(&input)?;
     let detections = detector.detect(&bytes).await?;
-    println!("{} object(s) detected in {}", detections.len(), input.display());
+    println!(
+        "{} object(s) detected in {}",
+        detections.len(),
+        input.display()
+    );
 
     let mut img = image::load_from_memory(&bytes)?.to_rgba8();
     let font = FontRef::try_from_slice(include_bytes!("../../assets/DejaVuSans-Bold.ttf"))
@@ -103,17 +110,26 @@ fn draw_detection(
     let box_h = th as i32 + pad * 2;
     let ly = if y - box_h >= 0 { y - box_h } else { y };
 
-    draw_filled_rect_mut(img, Rect::at(x, ly).of_size(box_w as u32, box_h as u32), color);
+    draw_filled_rect_mut(
+        img,
+        Rect::at(x, ly).of_size(box_w as u32, box_h as u32),
+        color,
+    );
     draw_text_mut(img, WHITE, x + pad, ly + pad, scale, font, &label);
 }
 
 /// Stable per-class colour index (so the same class always gets the same colour).
 fn hash_class(class: &str) -> usize {
-    class.bytes().fold(0usize, |acc, b| acc.wrapping_mul(31).wrapping_add(b as usize))
+    class.bytes().fold(0usize, |acc, b| {
+        acc.wrapping_mul(31).wrapping_add(b as usize)
+    })
 }
 
 fn default_output(input: &Path) -> PathBuf {
-    let stem = input.file_stem().and_then(|s| s.to_str()).unwrap_or("output");
+    let stem = input
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or("output");
     let parent = input.parent().unwrap_or_else(|| Path::new("."));
     parent.join(format!("{stem}_annotated.jpg"))
 }

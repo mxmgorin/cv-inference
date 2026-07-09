@@ -1,5 +1,8 @@
 # CV Inference (Rust + YOLO + ONNX)
 
+[![CI](https://github.com/mxmgorin/cv-inference/actions/workflows/ci.yml/badge.svg)](https://github.com/mxmgorin/cv-inference/actions/workflows/ci.yml)
+[![Rust](https://img.shields.io/badge/rust-2024_edition-orange?logo=rust)](https://www.rust-lang.org)
+
 Object detection in Rust built around a pre-trained **YOLO11** ONNX model run
 via **ONNX Runtime**. It's organised as a small reusable detection library with
 two front-ends on top:
