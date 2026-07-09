@@ -10,10 +10,6 @@ two front-ends on top:
 - 🌐 a **REST API** (Axum) that returns detections as JSON, and
 - 🖼️ an **`annotate` CLI** that draws the detected boxes onto an image.
 
-The focus is *backend integration* of a computer-vision model — model loading,
-image preprocessing, ONNX inference, and detection post-processing — rather than
-ML model training.
-
 ## Demo
 
 <img src="docs/assets/demo.jpg" alt="Detection demo — a street scene with a car, a tram and pedestrians boxed and labelled" width="560">
